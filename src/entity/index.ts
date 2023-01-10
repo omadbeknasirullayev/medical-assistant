@@ -1,0 +1,5 @@
+export * from "./hospital.entity"
+export * from "./region.entity"
+export * from "./district.entity"
+export * from "./hospital-ward.entity"
+export * from "./specialist.entity"
