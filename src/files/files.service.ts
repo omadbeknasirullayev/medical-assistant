@@ -5,19 +5,15 @@ import * as uuid from 'uuid'
 
 @Injectable()
 export class FilesService {
-    async createFile(file: any, file_ex: string): Promise <string> {
+    async createFile(file: any, whoIs?: string): Promise <string> {
         try {
-            const fileName = uuid.v4() + `${file_ex}`
+            let file_ex = String(file.originalname).split(".")
+            const fileName = uuid.v4() + `.${file_ex[file_ex.length - 1]}`
             let filePath = ""
-            if (file_ex == '.jpg')
-                filePath = path.resolve(__dirname, '..', 'static/images')
-            else
-                filePath = path.resolve(__dirname, '..', 'static/files')
-
+            filePath = path.resolve(__dirname, '..', `static/${whoIs}/${file.fieldname}`)
             if (!fs.existsSync(filePath)) {
                 fs.mkdirSync(filePath, {recursive: true})
             }
-            // console.log(fileName)
             fs.writeFileSync(path.join(filePath, fileName), file.buffer)
             return fileName
         } catch (error) {
@@ -28,13 +24,10 @@ export class FilesService {
         }
     }
 
-    async removeFile(fileName: string, file_ex: string) {
+    async removeFile(fileName: string, whoIs: string, file: string) {
         try {
             let filePath = ""
-            if (file_ex == '.jpg')
-                filePath = path.resolve(__dirname, '..', 'static/images')
-            else 
-                filePath = path.resolve(__dirname, '..', 'static/files')
+                filePath = path.resolve(__dirname, '..', `static/${whoIs}/${file}`)
 
             fs.unlinkSync(path.join(filePath, fileName))
 

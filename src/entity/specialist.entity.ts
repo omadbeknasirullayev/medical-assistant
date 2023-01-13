@@ -1,9 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { User } from "./user.entity";
 
-@Table({tableName: 'specialist', freezeTableName: true})
+@Table({ tableName: 'specialist', freezeTableName: true })
 export class Specialist extends Model<Specialist> {
-    @ApiProperty({example: 1, description: 'Unical ID'})
+    @ApiProperty({ example: 1, description: 'Unical ID' })
     @Column({
         type: DataType.BIGINT,
         unique: true,
@@ -12,62 +13,39 @@ export class Specialist extends Model<Specialist> {
     })
     id: number
 
-    @ApiProperty({example: 'Aliyev', description: 'First name of Specialist'})
+    @ApiProperty({ example: 2, description: 'User id of Specialist, connection with users table' })
+    @ForeignKey(() => User)
     @Column({
-        type: DataType.STRING(100),
+        type: DataType.BIGINT,
         allowNull: false
     })
-    fname: string
+    user_id: number
 
-    @ApiProperty({example: 'Dilshod', description: 'Last name of specialist'})
+    @ApiProperty({ example: 'Xirurg', description: 'Spec name of specialist' })
     @Column({
-        type: DataType.STRING(100)
-    })
-    lname: string
-
-    @ApiProperty({ example: 'dilshod@gmail.com', description: 'Email of specialist' })
-    @Column({
-        type: DataType.STRING(100),
-        unique: true
-    })
-    email: string
-
-    @ApiProperty({ example: 'password', description: 'Password of specialist' })
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    password: string
-    
-    @ApiProperty({example: 'Xirurg', description: 'Spec name of specialist'})
-    @Column({
-        type: DataType.STRING(100),
-        allowNull: false
+        type: DataType.STRING()
     })
     spec_name: string
 
-    @ApiProperty({example: "file", description: 'License of specialist'})
+    @ApiProperty({ example: "file name", description: 'License of specialist' })
     @Column({
-        type: DataType.STRING
+        type: DataType.STRING(100)
     })
     license: string
 
-    @ApiProperty({example: "file", description: 'Avatar of specialist'})
-    @Column({
-        type: DataType.STRING
-    })
-    photo: string
-
-    @ApiProperty({example: '10 yil', description: 'Experience of specialist'})
+    @ApiProperty({ example: '10 yil', description: 'Experience of specialist' })
     @Column({
         type: DataType.STRING
     })
     experience: string
 
-    @ApiProperty({example: false, description: 'Specialist active or not'})
+    @ApiProperty({ example: false, description: 'Specialist active or not' })
     @Column({
         type: DataType.BOOLEAN,
         defaultValue: false
     })
     is_active: boolean
+
+    @BelongsTo(() => User)
+    user: User
 }

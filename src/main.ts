@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { now } from 'sequelize/types/utils';
 import { AppModule } from './app.module';
 
 async function start() {
@@ -20,7 +21,7 @@ async function start() {
   SwaggerModule.setup('/api/docs', app, document)
 
   await app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`)
+    console.log(`http://localhost:${PORT}`) 
   });
 }
 start();

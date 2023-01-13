@@ -35,5 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 wloyiha.drawio
-otp.ts
 otp.controllers.js
