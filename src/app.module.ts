@@ -4,7 +4,7 @@ import { DistrictModule } from './district/district.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { HospitalModule } from './hospital/hospital.module';
-import { Diagnosis, District, Hospital, HospitalWard, HospitalWardSpec, Region, Specialist, User, UserDate } from './entity';
+import { Diagnosis, District, Hospital, HospitalWard, HospitalWardSpec, LobaratoryDiagnosis, OTP, Recipe, Region, Specialist, Treatment, User, UserDate } from './entity';
 import { HospitalWardModule } from './hospital-ward/hospital-ward.module';
 import { SpecialistModule } from './specialist/specialist.module';
 import { FilesModule } from './files/files.module';
@@ -20,6 +20,10 @@ import { ServiceModule } from './service/service.module';
 import { UserDateModule } from './user_date/user_date.module';
 import { HospitalWardSpecModule } from './hospital-ward-spec/hospital-ward-spec.module';
 import { DiagnosisModule } from './diagnosis/diagnosis.module';
+import { LobaratoryDiagnosisModule } from './lobaratory_diagnosis/lobaratory_diagnosis.module';
+import { TreatmentModule } from './treatment/treatment.module';
+import { RecipeModule } from './recipe/recipe.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -34,7 +38,7 @@ import { DiagnosisModule } from './diagnosis/diagnosis.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Region, District, Hospital, HospitalWard, Specialist, User, UserDate, HospitalWardSpec, Diagnosis],
+      models: [Region, District, Hospital, HospitalWard, Specialist, User, UserDate, HospitalWardSpec, Diagnosis, LobaratoryDiagnosis, Treatment, Recipe, OTP],
       autoLoadModels: true,
       logging: false,
     }),
@@ -65,7 +69,7 @@ import { DiagnosisModule } from './diagnosis/diagnosis.module';
       }),
       inject: [ConfigService],
     }),
-    RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, ServiceModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule,
+    RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, ServiceModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule, LobaratoryDiagnosisModule, TreatmentModule, RecipeModule, AdminModule,
   ],
   controllers: [],
   providers: [MailService],
