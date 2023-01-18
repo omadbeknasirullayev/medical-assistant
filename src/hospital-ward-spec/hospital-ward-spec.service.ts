@@ -20,6 +20,10 @@ export class HospitalWardSpecService {
     return await this.hospitalWardSpecRepository.findOne({ where: { id } })
   }
 
+  async findBySpecId(id: number, ward: number) {
+    return await this.hospitalWardSpecRepository.findOne({where: {spec_id: id, ward_id: ward}})
+  }
+
   async update(id: number, updateHospitalWardSpecDto: UpdateHospitalWardSpecDto) {
     return await this.hospitalWardSpecRepository.update(updateHospitalWardSpecDto, { where: { id } })
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { where } from 'sequelize';
 import { Treatment } from 'src/entity';
 import { CreateTreatmentDto } from './dto/create-treatment.dto';
 import { UpdateTreatmentDto } from './dto/update-treatment.dto';
@@ -19,6 +20,18 @@ export class TreatmentService {
 
   async findOne(id: number) {
     return await this.treatmentRepository.findOne({ where: { id }, include: { all: true } })
+  }
+
+  async finByUserId(id: number) {
+    return await this.treatmentRepository.findAll({where: {user_id: id}})
+  }
+
+  async findBySpecId(id: number) {
+    return this.treatmentRepository.findAll({where: {spec_id: id}})
+  }
+
+  async findByHospitalId(id: number) {
+    return await this.treatmentRepository.findAll({where: {hospital_id: id}})
   }
 
   async update(id: number, updateTreatmentDto: UpdateTreatmentDto) {

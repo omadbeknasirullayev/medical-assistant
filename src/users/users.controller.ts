@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserInfoDto } from './dto/createUserInfo.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,6 +8,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateBloodType } from './dto/createBloodType';
+import { getByItemGuard } from 'src/guards/getByItem.guard';
 
 @ApiTags('Users')
 @Controller('users')
@@ -39,7 +40,7 @@ export class UsersController {
   @ApiResponse({status: 200, type: User})
   @Post('sendEmail')
   forgotPassword(@Body() email: any) {
-    return this.usersService.forgotPassword(email.email)
+    // return this.usersService.forgotPassword(email.email)
   }
 
   @ApiOperation({ summary: "Activate user" })
@@ -101,7 +102,9 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: "Find All user" })
-  @ApiResponse({status: 200, type: [User]})
+  @ApiResponse({ status: 200, type: [User] })
+    
+  @UseGuards(getByItemGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { LobaratoryDiagnosisService } from './lobaratory_diagnosis.service';
 import { CreateLobaratoryDiagnosisDto } from './dto/create-lobaratory_diagnosis.dto';
 import { UpdateLobaratoryDiagnosisDto } from './dto/update-lobaratory_diagnosis.dto';
@@ -7,6 +7,7 @@ import { LobaratoryDiagnosis } from 'src/entity';
 import { FilesService } from 'src/files/files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { addGuard } from 'src/guards/add.guard';
 
 @ApiTags("Lobaratory diagnosis")
 @Controller('lobaratory-diagnosis')
@@ -14,7 +15,8 @@ export class LobaratoryDiagnosisController {
   constructor(private readonly lobaratoryDiagnosisService: LobaratoryDiagnosisService) {}
 
   @ApiOperation({ summary: "Create lobaratory diagnposis" })
-  @ApiResponse({status: 200, type: LobaratoryDiagnosis})
+  @ApiResponse({ status: 200, type: LobaratoryDiagnosis })
+  @UseGuards(addGuard)
   @Post()
   @UseInterceptors(FileInterceptor('diagnosis_file'))
   create(@Body() createLobaratoryDiagnosisDto: CreateLobaratoryDiagnosisDto, @UploadedFile() diagnosis_file: any) {

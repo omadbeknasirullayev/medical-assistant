@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { Diagnosis } from "./diagnosis.entity";
 import { District } from "./district.entity";
 
 interface CreateUserAttr {
@@ -98,5 +99,8 @@ export class User extends Model<User, CreateUserAttr> {
         defaultValue: false
     })
     is_active: boolean
+
+    @HasMany(() => Diagnosis)
+    diagnosis: Diagnosis
 
 }

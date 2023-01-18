@@ -30,6 +30,25 @@ export class TreatmentController {
   findOne(@Param('id') id: string) {
     return this.treatmentService.findOne(+id);
   }
+
+  findBySelf(id: number) {
+    return
+  }
+
+  @Get('findbyuser/:id') 
+  findByUserId(@Param('id') id: string) {
+    return this.treatmentService.finByUserId(+id)
+  }
+
+  @Get('findbyspec/:id')
+  findBySpecId(@Param('id') id: string) {
+    return this.treatmentService.findBySpecId(+id)
+  }
+
+  @Get('findbyhospital/:id')
+  findByHospitalId(@Param('id') id: string) {
+    return this.treatmentService.findByHospitalId(+id)
+  }
   
   @ApiOperation({ summary: "Update treatment" })
   @ApiResponse({ status: 200, type: Treatment })

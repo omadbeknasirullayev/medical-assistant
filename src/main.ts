@@ -1,17 +1,15 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { now } from 'sequelize/types/utils';
 import { AppModule } from './app.module';
 
 async function start() {
   const app = await NestFactory.create(AppModule);
   const PORT = process.env.PORT || 3030
-
-  // app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe())
   
   const config = new DocumentBuilder()
-  .setTitle('ITicket')
+  .setTitle('Medical Assistant')
   .setDescription('REST API')
   .setVersion('1.0.0')
   .addTag('NodeJS, NestJS, Postgres, sequelize')

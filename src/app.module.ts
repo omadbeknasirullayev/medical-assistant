@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { RegionModule } from './region/region.module';
 import { DistrictModule } from './district/district.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { HospitalModule } from './hospital/hospital.module';
-import { Diagnosis, District, Hospital, HospitalWard, HospitalWardSpec, LobaratoryDiagnosis, OTP, Recipe, Region, Specialist, Treatment, User, UserDate } from './entity';
+import { AdminPermission, Diagnosis, District, Hospital, HospitalWard, HospitalWardSpec, LobaratoryDiagnosis, OTP, Permission, Recipe, Region, Specialist, Treatment, User, UserDate, UserPermission } from './entity';
 import { HospitalWardModule } from './hospital-ward/hospital-ward.module';
 import { SpecialistModule } from './specialist/specialist.module';
 import { FilesModule } from './files/files.module';
@@ -15,8 +15,6 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { MailModule } from './mail/mail.module';
 import { MailService } from './mail/mail.service';
-import { ServiceModule } from './service/service.module';
-// import { CryptoModule } from './crypto/crypto.module';
 import { UserDateModule } from './user_date/user_date.module';
 import { HospitalWardSpecModule } from './hospital-ward-spec/hospital-ward-spec.module';
 import { DiagnosisModule } from './diagnosis/diagnosis.module';
@@ -24,6 +22,10 @@ import { LobaratoryDiagnosisModule } from './lobaratory_diagnosis/lobaratory_dia
 import { TreatmentModule } from './treatment/treatment.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { AdminModule } from './admin/admin.module';
+import { AdminPermissionModule } from './admin_permission/admin_permission.module';
+import { PermissionModule } from './permission/permission.module';
+import { UserPermissionModule } from './user_permission/user_permission.module';
+import { SpecPermissionModule } from './spec_permission/spec_permission.module';
 
 @Module({
   imports: [
@@ -38,38 +40,37 @@ import { AdminModule } from './admin/admin.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Region, District, Hospital, HospitalWard, Specialist, User, UserDate, HospitalWardSpec, Diagnosis, LobaratoryDiagnosis, Treatment, Recipe, OTP],
+      models: [Region, District, Hospital, HospitalWard, Specialist, User, UserDate, HospitalWardSpec, Diagnosis, LobaratoryDiagnosis, Treatment, Recipe, OTP, Permission, AdminPermission, UserPermission],
       autoLoadModels: true,
       logging: false,
     }),
 
     MailerModule.forRootAsync({
-      imports: [ConfigModule],
+      // imports: [ConfigModule],
       useFactory: () => ({
         transport: {
           service: 'gmail',
           host: process.env.SMTP_HOST,
-          port: process.env.SMTP_PORT,
+          port: Number(process.env.SMTP_PORT),
           secure: false,
           auth: {
-
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASSWORD,
           },
         },
-        // defaults: {
-        //   from: '<sendgrid_from_email_address>'
-        // },
+        defaults: {
+          from: `${process.env.SMTP_USER}`
+        },
         // template: {
         //   dir: join(__dirname, './templates'),
         //   options: {
         //     strict: true
         //   }
         // }
-      }),
-      inject: [ConfigService],
+      }), 
+      // inject: [ConfigService],
     }),
-    RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, ServiceModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule, LobaratoryDiagnosisModule, TreatmentModule, RecipeModule, AdminModule,
+    RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule, LobaratoryDiagnosisModule, TreatmentModule, RecipeModule, AdminModule, AdminPermissionModule, PermissionModule, UserPermissionModule, SpecPermissionModule,
   ],
   controllers: [],
   providers: [MailService],

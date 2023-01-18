@@ -27,7 +27,7 @@ export class UsersService {
     regist.password = await this.authService.hashedPassword(regist.password)
     let newUser = await this.userRepository.create(regist)
     newUser = newUser.dataValues
-    const token = await this.authService.getTokens(newUser)
+    const token = await this.authService.getTokens(newUser, 'USER')
     await this.userRepository.update({ token: token.refresh_token }, { where: { id: newUser.id } })
     return token
   }
@@ -44,7 +44,7 @@ export class UsersService {
       throw new HttpException("Phone number or password invalid", HttpStatus.BAD_REQUEST)
     }
 
-    const token = await this.authService.getTokens(user)
+    const token = await this.authService.getTokens(user, 'USER')
     await this.userRepository.update({ token: token.refresh_token }, { where: { id: user.id } })
     return token
   }
@@ -58,15 +58,26 @@ export class UsersService {
     return await this.userRepository.update({ is_active: false, token: null }, { where: { id } })
   }
 
-  //forgotPassword
-  async forgotPassword(email: string) {
-    const user = await this.userRepository.findOne({ where: { email } })
+
+  async refreshToken(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } })
     if (!user) {
-      throw new NotFoundException("User not found")
+      throw new NotFoundException('User not found')
     }
-    console.log(user)
-    await this.mailerService.sendMail(email, "omadbek")
+    const token = await this.authService.getTokens(user, 'USER')
+    await this.userRepository.update({ token: token.refresh_token }, { where: { id } })
+    return token
   }
+
+  //forgotPassword
+  // async forgotPassword(email: string) {
+  //   const user = await this.userRepository.findOne({ where: { email } })
+  //   if (!user) {
+  //     throw new NotFoundException("User not found")
+  //   }
+  //   console.log(user)
+  //   await this.mailerService.sendMail(email, "omadbek")
+  // }
 
   //activate
   async activation(id: number) {
@@ -127,7 +138,6 @@ export class UsersService {
   //update Use
   async update(id: number, updateUserDto: UpdateUserDto) {
     return await this.userRepository.update({ ...updateUserDto }, { where: { id } })
-
   }
 
   //removePermenantly

@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { HospitalWardSpecService } from './hospital-ward-spec.service';
 import { CreateHospitalWardSpecDto } from './dto/create-hospital-ward-spec.dto';
 import { UpdateHospitalWardSpecDto } from './dto/update-hospital-ward-spec.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HospitalWardSpec } from 'src/entity';
 
+@ApiTags('Hospital-ward-spec')
 @Controller('hospital-ward-spec')
 export class HospitalWardSpecController {
   constructor(private readonly hospitalWardSpecService: HospitalWardSpecService) {}
