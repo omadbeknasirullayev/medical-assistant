@@ -18,3 +18,13 @@ export class Permission extends Model<Permission> {
     })
     name: string
 }
+
+
+// 1 super admin
+// 2 creator
+// 3 hospital admin
+// 4 activation
+// 5 deleted permanently
+// 6 patch by id permission
+// 7 add 
+// 8 get by id permission

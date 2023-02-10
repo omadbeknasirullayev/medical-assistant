@@ -34,5 +34,5 @@ export class UserSpecPermission extends Model<UserSpecPermission> {
     @Column({
         type: DataType.STRING
     })
-    end_date: string
+    expire_time: string
 }
