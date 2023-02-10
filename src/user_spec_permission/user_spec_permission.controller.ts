@@ -22,6 +22,11 @@ export class UserSpecPermissionController {
     return this.userSpecPermissionService.findOne(+id);
   }
 
+  @Get('ByUserId/:id') 
+  findByUserId(@Param('id') id: string) {
+    return this.userSpecPermissionService.findOnlyUserPermissions(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserSpecPermissionDto: UpdateUserSpecPermissionDto) {
     return this.userSpecPermissionService.update(+id, updateUserSpecPermissionDto);

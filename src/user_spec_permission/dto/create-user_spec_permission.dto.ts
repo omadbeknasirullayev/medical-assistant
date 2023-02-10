@@ -16,5 +16,5 @@ export class CreateUserSpecPermissionDto {
 
     @ApiProperty({ example: "45", description: "experition time" })
     @IsString()
-    end_date: string
+    expire_time: string
 }
