@@ -7,7 +7,6 @@ import { LobaratoryDiagnosis } from 'src/entity';
 import { FilesService } from 'src/files/files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { addGuard } from 'src/guards/add.guard';
 
 @ApiTags("Lobaratory diagnosis")
 @Controller('lobaratory-diagnosis')

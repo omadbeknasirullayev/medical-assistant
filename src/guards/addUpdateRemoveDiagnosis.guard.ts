@@ -33,14 +33,18 @@ export class AddDiagnosisGuard implements CanActivate {
                 const permissionUrl = ['/diagnosis', '/treatment']
                 if (permissionUrl.includes(req.url)) {
                     const specPermission = await this.userSpecPermission.findBySpecId(date.id, body.user_id);
-                    if (+specPermission.expire_time > Date.now() && specPermission.permission_id != 7) {
-                        throw new UnauthorizedException({message: "The user is not authorized"});
+                    if (+specPermission.expire_time > Date.now() ) {
+                        switch (specPermission.permission_id) {
+                            case 5: 
+                            case 6:
+                            case 8:
+                                return true;
                     }
-                    return true;
+                    
                 }
             }
-            throw new UnauthorizedException({message: "The user is not authorized"});
-
+        }
+        throw new UnauthorizedException({message: "The user is not authorized"});
         } catch (error) { 
             throw new HttpException(
                 `${error.message}`, 

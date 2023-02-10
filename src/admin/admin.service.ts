@@ -8,7 +8,6 @@ import { AuthService } from 'src/auth/auth.service';
 import { LoginDto } from './dto/loginDto';
 import { ForgotPasswordDto } from './dto/forgotPassDto';
 import { MailService } from 'src/mail/mail.service';
-import { AdminPermission } from 'src/entity';
 
 @Injectable()
 export class AdminService {
@@ -96,7 +95,7 @@ export class AdminService {
   }
 
   async findAll() {
-    return await this.adminRepository.findAll({ include: AdminPermission})
+    return await this.adminRepository.findAll({ include: {all: true}})
   }
 
   async findOne(id: number) {

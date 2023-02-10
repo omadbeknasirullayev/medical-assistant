@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
-import { AdminPermission } from "./admin_permission.entity";
 import { Hospital } from "./hospital.entity";
-import { UserPermission } from "./user_permission.entity";
 
 @Table({tableName: "admins"})
 export class Admin extends Model<Admin> {
@@ -49,22 +47,21 @@ export class Admin extends Model<Admin> {
     })
     password: string 
 
-    // @ApiProperty({example: "5", description: 'hospital of admin, connection with hospital table'})
-    // @ForeignKey(() => Hospital) 
-    // @Column({
-    //     type: DataType.SMALLINT
-    // })
-    // hospital_id: number
-
     @ApiProperty({example: "5", description: 'hospital of admin, connection with hospital table'})
     @ForeignKey(() => Hospital) 
     @Column({
-        type: DataType.SMALLINT
+        type: DataType.BIGINT
     })
     hospital_id: number
 
     @BelongsTo(() => Hospital)
     hospital: Hospital
+
+    // bu yerda foreign key
+    @Column({
+        type: DataType.SMALLINT
+    })
+    permission_id: number
 
     @ApiProperty({example: "file", description: 'Photo of user'})
     @Column({
@@ -84,7 +81,4 @@ export class Admin extends Model<Admin> {
         type: DataType.STRING
     })
     token: string
-
-    @HasMany(() => AdminPermission) 
-    permission: AdminPermission
  }

@@ -4,9 +4,7 @@ import { CreateRegionDto } from './dto/create-region.dto';
 import { UpdateRegionDto } from './dto/update-region.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Region } from '../entity/region.entity';
-import { addGuard } from 'src/guards/add.guard';
-import { test } from 'src/guards/add.guard';
-import { test1 } from 'src/guards/addDiagnosis.guard';
+import { AddGuard } from 'src/guards/add.guard';
 
 @ApiTags('Region')
 @Controller('region')
@@ -15,6 +13,7 @@ export class RegionController {
 
   @ApiOperation({ summary: 'Region name' })
   @ApiResponse({ status: 200, type: Region })
+  @UseGuards(AddGuard) 
   @Post()
   create(@Body() createRegionDto: CreateRegionDto) {
     return this.regionService.create(createRegionDto);
@@ -22,8 +21,6 @@ export class RegionController {
 
   @ApiOperation({ summary: 'Find all regions' })
   @ApiResponse({ status: 200, type: [Region] })
-  // @UseGuards(addGuard)
-  @UseGuards(test) 
   @Get()
   findAll() {
     return this.regionService.findAll();

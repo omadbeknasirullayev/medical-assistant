@@ -4,7 +4,7 @@ import { DistrictModule } from './district/district.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { HospitalModule } from './hospital/hospital.module';
-import { AdminPermission, Diagnosis, District, Hospital, HospitalWard, HospitalWardSpec, LobaratoryDiagnosis, OTP, Permission, Recipe, Region, Specialist, Treatment, User, UserDate, UserPermission } from './entity';
+import { Diagnosis, District, Hospital, HospitalWard, HospitalWardSpec, LobaratoryDiagnosis, OTP, Permission, Recipe, Region, Specialist, Treatment, User, UserDate } from './entity';
 import { HospitalWardModule } from './hospital-ward/hospital-ward.module';
 import { SpecialistModule } from './specialist/specialist.module';
 import { FilesModule } from './files/files.module';
@@ -21,10 +21,7 @@ import { LobaratoryDiagnosisModule } from './lobaratory_diagnosis/lobaratory_dia
 import { TreatmentModule } from './treatment/treatment.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { AdminModule } from './admin/admin.module';
-import { AdminPermissionModule } from './admin_permission/admin_permission.module';
 import { PermissionModule } from './permission/permission.module';
-import { UserPermissionModule } from './user_permission/user_permission.module';
-import { SpecPermissionModule } from './spec_permission/spec_permission.module';
 import { UserSpecPermissionModule } from './user_spec_permission/user_spec_permission.module';
 import { SpecDateModule } from './spec_date/spec_date.module';
 
@@ -41,7 +38,7 @@ import { SpecDateModule } from './spec_date/spec_date.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Region, District, Hospital, HospitalWard, Specialist, User, UserDate, HospitalWardSpec, Diagnosis, LobaratoryDiagnosis, Treatment, Recipe, OTP, Permission, AdminPermission, UserPermission],
+      models: [Region, District, Hospital, HospitalWard, Specialist, User, UserDate, HospitalWardSpec, Diagnosis, LobaratoryDiagnosis, Treatment, Recipe, OTP, Permission],
       autoLoadModels: true,
       logging: false,
     }),
@@ -71,7 +68,7 @@ import { SpecDateModule } from './spec_date/spec_date.module';
       }), 
       // inject: [ConfigService],
     }),
-    RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule, LobaratoryDiagnosisModule, TreatmentModule, RecipeModule, AdminModule, AdminPermissionModule, PermissionModule, UserPermissionModule, SpecPermissionModule, UserSpecPermissionModule, SpecDateModule,
+    RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule, LobaratoryDiagnosisModule, TreatmentModule, RecipeModule, AdminModule, PermissionModule, UserSpecPermissionModule, SpecDateModule,
   ],
   controllers: [],
   providers: [MailService],

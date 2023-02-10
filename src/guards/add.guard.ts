@@ -25,7 +25,6 @@ export class AddGuard implements CanActivate {
 
             const bearer = authHeader.split(' ')[0];
             const token = authHeader.split(' ')[1];
-            console.log(req.url)
             if (bearer !== 'Bearer' || ! token) {
                 throw new UnauthorizedException({message: "The user is not authorized"});
             }
@@ -37,7 +36,11 @@ export class AddGuard implements CanActivate {
                     const notPermissionToAdmin = ['/diagnosis', '/treatment', '/lobaratory-diagnosis', '/recipe', '/hospital-ward-spec', '/specialist', '/users', '/user-date', '/user-spec-permission',]
 
                     const admin = await this.adminService.findOne(date.id)
-                    switch (admin.hospital_id) {
+                    if (!admin) {
+                        throw new UnauthorizedException({message: "The admin is not authorized"});
+                    }
+
+                    switch (admin.permission_id) {
                         case 1:    // super admin
                         case 2:    // creator
                             if (notPermissionToAdmin.includes(req.url))
@@ -61,7 +64,7 @@ export class AddGuard implements CanActivate {
                         default:
                             throw new UnauthorizedException({message: "The admin is not authorized"});
                     }
-
+                    break;
                 case 'USER':
                 case 'SPEC':
                     const permissionToUser = ['/users', '/user-date', '/space-date', '/user-spec-permission']

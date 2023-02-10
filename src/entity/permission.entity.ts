@@ -24,7 +24,7 @@ export class Permission extends Model<Permission> {
 // 2 creator
 // 3 hospital admin
 // 4 activation
-// 5 deleted permanently
-// 6 patch by id permission
-// 7 add 
-// 8 get by id permission
+// 5 patch by id permission
+// 6 add 
+// 7 get by id permission
+// 8 deleted permanently

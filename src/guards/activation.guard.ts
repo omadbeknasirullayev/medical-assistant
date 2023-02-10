@@ -6,16 +6,12 @@ import {
     Injectable,
     UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { Observable } from 'rxjs';
-import { AdminPermissionService } from 'src/admin_permission/admin_permission.service';
-import { SpecPermissionService } from 'src/spec_permission/spec_permission.service';
-import { UserPermissionService } from 'src/user_permission/user_permission.service';
+import { AdminService } from 'src/admin/admin.service';
 
 @Injectable()
 export class getByItemGuard implements CanActivate {
-    constructor(private readonly jwtService: JwtService, private adminPermission: AdminPermissionService,) { }
+    constructor(private readonly jwtService: JwtService, private adminService: AdminService,) { }
     async canActivate(
         context: ExecutionContext,
     ) {
@@ -34,48 +30,38 @@ export class getByItemGuard implements CanActivate {
                     message: "The user is not authorized",
                 });
             }
-
             const date = await this.jwtService.verify(token, { publicKey: process.env.ACCESS_TOKEN_KEY });
-            let permission = []
+            
             switch (date.who) {
                 case 'ADMIN':
-                    const admin = await this.adminPermission.findByAdminId(date.id)
-                    if (!admin) {
-                        throw new UnauthorizedException({
-                            message: "The admin is not authorized",
-                        });
-                    }
-
-                    for (let i of admin) {
-                        permission.push(i.dataValues.permission.dataValues.name)
-                    }
-                    if (permission.includes('super-admin'))
-                        return true
-                    if (permission.includes('activation')) {
-                        return true
-                    }
-
-                    throw new UnauthorizedException({
-                        message: "The admin is not authorized",
-                    });
-                case 'USER':
-                    throw new UnauthorizedException({
-                        message: "The user is not authorized",
-                    });
-                case 'SPEC':
-                    throw new UnauthorizedException({
-                        message: "The spec is not authorized",
-                    });
-            }
-            return false
-
-
+                    let url = ['/spec-date', '/admin', '/hospital', '/hospital-ward', '/hospital-ward-spec']
+                    if (url.includes(req.url)) {
+                        const admin = await this.adminService.findOne(date.id)
+                    
+                        if (!admin) {
+                            throw new UnauthorizedException({
+                                message: "The admin is not authorized",
+                            });
+                        }
+                        
+                        switch (admin.permission_id) {
+                            case 1: 
+                            case 2: 
+                            case 3: 
+                            case 4: 
+                                return true
+                            }
+                        }
+                   
+        }
+        throw new UnauthorizedException({
+            message: "The user is not authorized",
+        });
         } catch (error) {
-            console.log(error)
             throw new HttpException(
-                'Ruxsat etilmagan foydalanuvchi',
+                `${error.message}`, 
                 HttpStatus.FORBIDDEN
-            );
+                );
         }
     }
 }

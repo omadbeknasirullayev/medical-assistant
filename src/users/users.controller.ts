@@ -8,7 +8,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateBloodType } from './dto/createBloodType';
-import { getByItemGuard } from 'src/guards/getByItem.guard';
 
 @ApiTags('Users')
 @Controller('users')
@@ -104,7 +103,7 @@ export class UsersController {
   @ApiOperation({ summary: "Find All user" })
   @ApiResponse({ status: 200, type: [User] })
     
-  @UseGuards(getByItemGuard)
+  // @UseGuards(getByItemGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();

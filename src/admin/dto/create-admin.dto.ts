@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsEmail, IsNumber, IsString } from "class-validator"
+import { IsEmail, IsString } from "class-validator"
 
 export class CreateAdminDto {
     @ApiProperty({ example: 'Aliyev', description: 'First name of Admin' })
@@ -21,8 +21,4 @@ export class CreateAdminDto {
     @ApiProperty({ example: 'password', description: 'Password of Admin' })
     @IsString()
     readonly password: string
-
-    @ApiProperty({ example: "5", description: 'hospital of admin, connection with hospital table' })
-    @IsNumber()
-    readonly hospital_id: number
 }
