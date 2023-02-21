@@ -48,14 +48,14 @@ export class Admin extends Model<Admin> {
     password: string 
 
     @ApiProperty({example: "5", description: 'hospital of admin, connection with hospital table'})
-    @ForeignKey(() => Hospital) 
+    
     @Column({
         type: DataType.BIGINT
     })
     hospital_id: number
 
-    @BelongsTo(() => Hospital)
-    hospital: Hospital
+    // @BelongsTo(() => Hospital)
+    // hospital: Hospital
 
     // bu yerda foreign key
     @Column({

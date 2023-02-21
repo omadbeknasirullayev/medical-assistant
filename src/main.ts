@@ -14,6 +14,7 @@ async function start() {
   .setDescription('REST API')
   .setVersion('1.0.0')
   .addTag('NodeJS, NestJS, Postgres, sequelize')
+  .setDescription("This is a REST API written for Medical Record automation. The guard parts of the API are disabled. For ease of inspection.")
   .build()
 
   const document = SwaggerModule.createDocument(app, configSwagger)
