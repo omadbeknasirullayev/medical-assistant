@@ -64,7 +64,6 @@ export class AdminService {
 
   // forgot password for admin
   async forgotPassword(forgotPass: ForgotPasswordDto) {
-    console.log(forgotPass)
     if (forgotPass.phone_number) {
       const admin = await this.adminRepository.findOne({ where: { phone_number: forgotPass.phone_number } })
 
@@ -89,7 +88,8 @@ export class AdminService {
       })
       const hashedPass = await this.authService.hashedPassword(code)
       await this.adminRepository.update({ password: hashedPass }, { where: { id: admin.id } })
-      await this.mailService.sendMail(admin.email, code)
+      let html = `<h1> Your password changed </h1> <b> ${code} </b>`
+      await this.mailService.sendMail(admin.email, html)
       return code
     }
   }

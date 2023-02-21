@@ -102,8 +102,6 @@ export class UsersController {
 
   @ApiOperation({ summary: "Find All user" })
   @ApiResponse({ status: 200, type: [User] })
-    
-  // @UseGuards(getByItemGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();

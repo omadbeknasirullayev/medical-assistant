@@ -31,20 +31,25 @@ export class TreatmentController {
     return this.treatmentService.findOne(+id);
   }
 
-  findBySelf(id: number) {
-    return
-  }
 
+  @ApiOperation({ summary: "Find by user_id" })
+  @ApiResponse({ status: 200, type: Treatment })
   @Get('findbyuser/:id') 
   findByUserId(@Param('id') id: string) {
     return this.treatmentService.finByUserId(+id)
   }
 
+
+  @ApiOperation({ summary: "Find by spec_id" })
+  @ApiResponse({ status: 200, type: Treatment })
   @Get('findbyspec/:id')
   findBySpecId(@Param('id') id: string) {
     return this.treatmentService.findBySpecId(+id)
   }
 
+
+  @ApiOperation({ summary: "Find by hospital_id" })
+  @ApiResponse({ status: 200, type: Treatment })
   @Get('findbyhospital/:id')
   findByHospitalId(@Param('id') id: string) {
     return this.treatmentService.findByHospitalId(+id)

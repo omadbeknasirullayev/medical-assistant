@@ -43,31 +43,6 @@ import { SpecDateModule } from './spec_date/spec_date.module';
       logging: false,
     }),
 
-    MailerModule.forRootAsync({
-      // imports: [ConfigModule],
-      useFactory: () => ({
-        transport: {
-          service: 'gmail',
-          host: process.env.SMTP_HOST,
-          port: Number(process.env.SMTP_PORT),
-          secure: false,
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASSWORD,
-          },
-        },
-        defaults: {
-          from: `${process.env.SMTP_USER}`
-        },
-        // template: {
-        //   dir: join(__dirname, './templates'),
-        //   options: {
-        //     strict: true
-        //   }
-        // }
-      }), 
-      // inject: [ConfigService],
-    }),
     RegionModule, DistrictModule, HospitalModule, HospitalWardModule, SpecialistModule, FilesModule, UsersModule, AuthModule, OtpModule, MailModule, UserDateModule, HospitalWardSpecModule, DiagnosisModule, LobaratoryDiagnosisModule, TreatmentModule, RecipeModule, AdminModule, PermissionModule, UserSpecPermissionModule, SpecDateModule,
   ],
   controllers: [],

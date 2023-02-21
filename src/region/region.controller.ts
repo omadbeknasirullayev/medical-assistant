@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { RegionService } from './region.service';
 import { CreateRegionDto } from './dto/create-region.dto';
 import { UpdateRegionDto } from './dto/update-region.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Region } from '../entity/region.entity';
-import { AddGuard } from 'src/guards/add.guard';
 
 @ApiTags('Region')
 @Controller('region')
@@ -13,7 +12,6 @@ export class RegionController {
 
   @ApiOperation({ summary: 'Region name' })
   @ApiResponse({ status: 200, type: Region })
-  @UseGuards(AddGuard) 
   @Post()
   create(@Body() createRegionDto: CreateRegionDto) {
     return this.regionService.create(createRegionDto);
